@@ -90,13 +90,12 @@
 
                     <RatingBar
                         android:id="@+id/featured_product_rating"
-                        style="?android:attr/ratingBarStyleSmall"
+                        style="@style/WhiteRatingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:isIndicator="true"
                         android:numStars="5"
                         android:stepSize="0.5"
-                        android:theme="@style/WhiteRatingBar"
                         tools:rating="4.5" />
 
                     <TextView
@@ -118,6 +117,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:background="@drawable/featured_badge_background"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
@@ -125,8 +125,7 @@
             android:textColor="@android:color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="16dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

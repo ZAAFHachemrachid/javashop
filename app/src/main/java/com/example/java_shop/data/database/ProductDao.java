@@ -31,42 +31,46 @@ public interface ProductDao {
     @Query("DELETE FROM products")
     void deleteAll();
 
-    // Query operations
-    @Query("SELECT * FROM products")
-    LiveData<List<Product>> getAllProducts();
-
+    // Basic queries
     @Query("SELECT * FROM products WHERE id = :productId")
     LiveData<Product> getProduct(String productId);
 
-    @Query("SELECT * FROM products WHERE category = :categoryId")
+    @Query("SELECT * FROM products")
+    LiveData<List<Product>> getAllProducts();
+
+    // Category queries
+    @Query("SELECT * FROM products WHERE categoryId = :categoryId")
     LiveData<List<Product>> getProductsByCategory(String categoryId);
 
+    // Featured products
+    @Query("SELECT * FROM products WHERE isFeatured = 1 ORDER BY price DESC LIMIT 5")
+    LiveData<List<Product>> getFeaturedProducts();
+
+    // Special offers
+    @Query("SELECT * FROM products WHERE discountPercentage > 0 ORDER BY discountPercentage DESC LIMIT 10")
+    LiveData<List<Product>> getSpecialOffers();
+
+    // Search
+    @Query("SELECT * FROM products WHERE name LIKE :query OR description LIKE :query")
+    LiveData<List<Product>> searchProducts(String query);
+
+    // Stock management
+    @Query("SELECT (stockQuantity > 0) FROM products WHERE id = :productId")
+    LiveData<Boolean> isProductInStock(String productId);
+
+    @Query("SELECT stockQuantity FROM products WHERE id = :productId")
+    LiveData<Integer> getStockQuantity(String productId);
+
+    @Query("UPDATE products SET stockQuantity = :newQuantity WHERE id = :productId")
+    void updateStock(String productId, int newQuantity);
+
+    // Price queries
+    @Query("SELECT * FROM products ORDER BY price ASC")
+    LiveData<List<Product>> getProductsSortedByPriceAsc();
+
+    @Query("SELECT * FROM products ORDER BY price DESC")
+    LiveData<List<Product>> getProductsSortedByPriceDesc();
+
     @Query("SELECT * FROM products WHERE price BETWEEN :minPrice AND :maxPrice")
-    LiveData<List<Product>> getProductsByPriceRange(double minPrice, double maxPrice);
-
-    @Query("SELECT * FROM products WHERE stockQuantity > 0")
-    LiveData<List<Product>> getAvailableProducts();
-
-    @Query("SELECT * FROM products WHERE name LIKE '%' || :searchQuery || '%' OR description LIKE '%' || :searchQuery || '%'")
-    LiveData<List<Product>> searchProducts(String searchQuery);
-
-    @Query("SELECT * FROM products ORDER BY rating DESC LIMIT :limit")
-    LiveData<List<Product>> getTopRatedProducts(int limit);
-
-    @Query("UPDATE products SET stockQuantity = stockQuantity - :quantity WHERE id = :productId")
-    void decreaseStock(String productId, int quantity);
-
-    @Query("UPDATE products SET stockQuantity = stockQuantity + :quantity WHERE id = :productId")
-    void increaseStock(String productId, int quantity);
-
-    // Featured products query
-    @Query("SELECT * FROM products WHERE stockQuantity > 0 ORDER BY rating DESC, reviewCount DESC LIMIT :limit")
-    LiveData<List<Product>> getFeaturedProducts(int limit);
-
-    // Price range queries
-    @Query("SELECT MIN(price) FROM products")
-    LiveData<Double> getMinPrice();
-
-    @Query("SELECT MAX(price) FROM products")
-    LiveData<Double> getMaxPrice();
+    LiveData<List<Product>> getProductsInPriceRange(double minPrice, double maxPrice);
 }

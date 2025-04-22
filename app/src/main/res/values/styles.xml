@@ -44,4 +44,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
+
+    <!-- Rating bar styles -->
+    <style name="WhiteRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:progressTint">@android:color/white</item>
+        <item name="android:secondaryProgressTint">@android:color/white</item>
+    </style>
 </resources>

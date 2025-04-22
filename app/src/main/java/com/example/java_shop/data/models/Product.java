@@ -1,42 +1,54 @@
 package com.example.java_shop.data.models;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
-@Entity(tableName = "products")
+@Entity(
+    tableName = "products",
+    foreignKeys = @ForeignKey(
+        entity = Category.class,
+        parentColumns = "id",
+        childColumns = "categoryId",
+        onDelete = ForeignKey.CASCADE
+    ),
+    indices = {@Index("categoryId")}
+)
 public class Product {
     @PrimaryKey
     @NonNull
     private String id;
-    
     private String name;
     private String description;
-    private String category;
+    private String imageUrl;
     private double price;
     private int stockQuantity;
-    private String imageUrl;
+    private String categoryId;
+    private boolean isFeatured;
+    private double discountPercentage;
     private String specifications;
     private double rating;
     private int reviewCount;
+    private long lastModified;
 
-    // Constructor
-    public Product(@NonNull String id, String name, String description, String category,
-                  double price, int stockQuantity, String imageUrl, String specifications,
-                  double rating, int reviewCount) {
+    public Product(@NonNull String id, String name, String description, String imageUrl,
+                  double price, int stockQuantity, String categoryId) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.category = category;
+        this.imageUrl = imageUrl;
         this.price = price;
         this.stockQuantity = stockQuantity;
-        this.imageUrl = imageUrl;
-        this.specifications = specifications;
-        this.rating = rating;
-        this.reviewCount = reviewCount;
+        this.categoryId = categoryId;
+        this.isFeatured = false;
+        this.discountPercentage = 0.0;
+        this.rating = 0.0;
+        this.reviewCount = 0;
+        this.lastModified = System.currentTimeMillis();
     }
 
-    // Getters and Setters
     @NonNull
     public String getId() {
         return id;
@@ -62,12 +74,12 @@ public class Product {
         this.description = description;
     }
 
-    public String getCategory() {
-        return category;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public double getPrice() {
@@ -86,12 +98,28 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public boolean isFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(boolean featured) {
+        isFeatured = featured;
+    }
+
+    public double getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(double discountPercentage) {
+        this.discountPercentage = discountPercentage;
     }
 
     public String getSpecifications() {
@@ -116,5 +144,20 @@ public class Product {
 
     public void setReviewCount(int reviewCount) {
         this.reviewCount = reviewCount;
+    }
+
+    public long getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(long lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public double getDiscountedPrice() {
+        if (discountPercentage <= 0) {
+            return price;
+        }
+        return price * (1 - (discountPercentage / 100.0));
     }
 }
