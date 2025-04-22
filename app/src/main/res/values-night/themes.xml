@@ -32,12 +32,17 @@
         <item name="bottomNavigationStyle">@style/BottomNavigation.Dark</item>
         <item name="materialCardViewStyle">@style/ProductCard.Dark</item>
 
+        <!-- Button styles -->
+        <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.MaterialComponents.Button.OutlinedButton</item>
+
         <!-- Shape appearance -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MaterialComponents.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MaterialComponents.MediumComponent</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MaterialComponents.LargeComponent</item>
     </style>
 
+    <!-- Dark theme specific styles -->
     <style name="Toolbar.Dark" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="android:background">#1E1E1E</item>
         <item name="titleTextColor">?attr/colorOnSurface</item>

@@ -17,7 +17,6 @@
         <!-- Button styles -->
         <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.MaterialComponents.Button.OutlinedButton</item>
-        <item name="materialButtonTextStyle">@style/Widget.MaterialComponents.Button.TextButton</item>
 
         <!-- Input field styles -->
         <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
