@@ -34,3 +34,37 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupViews(view);
+        setupObservers();
+    }
+
+    private void setupViews(View view) {
+        // Will be implemented when adding featured products and special offers
+    }
+
+    private void setupObservers() {
+        // Observe featured products
+        viewModel.getFeaturedProducts().observe(getViewLifecycleOwner(), products -> {
+            // Will be implemented when adding featured products list
+        });
+
+        // Observe special offers
+        viewModel.getSpecialOffers().observe(getViewLifecycleOwner(), products -> {
+            // Will be implemented when adding special offers list
+        });
+
+        // Observe navigation commands
+        viewModel.getNavigationCommand().observe(getViewLifecycleOwner(), command -> {
+            if (command != null) {
+                Bundle args = new Bundle();
+                args.putString("productId", command.getArg());
+                Navigation.findNavController(requireView())
+                    .navigate(getResources().getIdentifier(
+                        command.getActionId(),
+                        "id",
+                        requireContext().getPackageName()
+                    ), args);
+                viewModel.resetNavigation();
+            }
+        });
+    }
+}

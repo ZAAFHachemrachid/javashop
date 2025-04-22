@@ -1,58 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App name -->
     <string name="app_name">Java Shop</string>
-    
-    <!-- Navigation Labels -->
+
+    <!-- Bottom navigation labels -->
     <string name="nav_home">Home</string>
     <string name="nav_categories">Categories</string>
     <string name="nav_cart">Cart</string>
     <string name="nav_account">Account</string>
 
-    <!-- Cart Screen -->
-    <string name="empty_cart">Your cart is empty</string>
-    <string name="add_items_message">Add items to your cart to see them here</string>
+    <!-- Content descriptions -->
+    <string name="desc_product_image">Product image</string>
+    <string name="desc_category_image">Category image</string>
+    <string name="desc_increase_quantity">Increase quantity</string>
+    <string name="desc_decrease_quantity">Decrease quantity</string>
+    <string name="desc_remove_item">Remove item</string>
+
+    <!-- Cart related strings -->
+    <string name="cart_empty">Your cart is empty</string>
     <string name="cart_total">Total:</string>
-    <string name="checkout">Checkout</string>
+    <string name="cart_subtotal">Subtotal:</string>
+    <string name="cart_shipping">Shipping:</string>
+    <string name="cart_tax">Tax:</string>
+    <string name="cart_checkout">Proceed to Checkout</string>
     <string name="remove_item">Remove item</string>
     <string name="increase_quantity">Increase quantity</string>
     <string name="decrease_quantity">Decrease quantity</string>
 
-    <!-- Checkout Screen -->
-    <string name="order_summary">Order Summary</string>
-    <string name="shipping_address">Shipping Address</string>
-    <string name="payment_method">Payment Method</string>
-    <string name="full_name_hint">Full Name</string>
-    <string name="street_address_hint">Street Address</string>
-    <string name="city_hint">City</string>
-    <string name="zip_code_hint">ZIP Code</string>
-    <string name="credit_card">Credit Card</string>
-    <string name="pay_on_delivery">Pay on Delivery</string>
-    <string name="place_order">Place Order</string>
-    <string name="order_total">Order Total:</string>
-
-    <!-- Order Confirmation Screen -->
-    <string name="order_success">Order Placed Successfully!</string>
-    <string name="order_details">Order Details</string>
-    <string name="order_id_format">Order ID: #%s</string>
-    <string name="order_date_format">Date: %s</string>
-    <string name="shipping_info">Shipping Information</string>
-    <string name="continue_shopping">Continue Shopping</string>
-
-    <!-- Error Messages -->
-    <string name="enter_name">Please enter your full name</string>
-    <string name="enter_address">Please enter your street address</string>
-    <string name="enter_city">Please enter your city</string>
-    <string name="enter_valid_zip">Please enter a valid ZIP code</string>
-    <string name="cart_empty">Your cart is empty</string>
-    <string name="max_quantity">Maximum available quantity reached</string>
-    <string name="min_quantity">Minimum quantity is 1</string>
-
-    <!-- Common -->
+    <!-- Product related strings -->
+    <string name="product_details">Product Details</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="product_description">Description</string>
+    <string name="product_specifications">Specifications</string>
+    <string name="product_reviews">Reviews</string>
     <string name="in_stock">In Stock</string>
     <string name="out_of_stock">Out of Stock</string>
-    <string name="add_to_cart">Add to Cart</string>
-    <string name="sort">Sort</string>
-    <string name="filter">Filter</string>
-    <string name="apply">Apply</string>
-    <string name="cancel">Cancel</string>
+    <string name="stock_remaining">%d left in stock</string>
+
+    <!-- Category related strings -->
+    <string name="all_categories">All Categories</string>
+    <string name="featured_products">Featured Products</string>
+    <string name="special_offers">Special Offers</string>
+    <string name="view_all">View All</string>
+
+    <!-- Error messages -->
+    <string name="error_loading_products">Error loading products</string>
+    <string name="error_loading_categories">Error loading categories</string>
+    <string name="error_adding_to_cart">Error adding item to cart</string>
+    <string name="error_removing_from_cart">Error removing item from cart</string>
+    <string name="error_updating_quantity">Error updating quantity</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+
+    <!-- Success messages -->
+    <string name="added_to_cart">Added to cart</string>
+    <string name="removed_from_cart">Removed from cart</string>
+    <string name="quantity_updated">Quantity updated</string>
+
+    <!-- Loading states -->
+    <string name="loading">Loading…</string>
+    <string name="please_wait">Please wait…</string>
 </resources>

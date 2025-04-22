@@ -3,20 +3,20 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/baseline_home_24"
-        android:title="Home" />
+        android:title="@string/nav_home" />
 
     <item
         android:id="@+id/categoriesFragment"
         android:icon="@drawable/baseline_category_24"
-        android:title="Categories" />
+        android:title="@string/nav_categories" />
 
     <item
         android:id="@+id/cartFragment"
         android:icon="@drawable/baseline_shopping_cart_24"
-        android:title="Cart" />
+        android:title="@string/nav_cart" />
 
     <item
         android:id="@+id/accountFragment"
         android:icon="@drawable/baseline_person_24"
-        android:title="Account" />
+        android:title="@string/nav_account" />
 </menu>
