@@ -10,7 +10,7 @@ import com.example.java_shop.data.models.CartItem;
 
 @Database(
     entities = {Product.class, Category.class, CartItem.class},
-    version = 2, // Increment version number after schema change
+    version = 3, // Increment version after schema changes
     exportSchema = false
 )
 public abstract class ComputerShopDatabase extends RoomDatabase {
