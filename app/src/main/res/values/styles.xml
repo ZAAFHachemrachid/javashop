@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Rating bar style with white stars -->
+    <style name="WhiteRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:progressTint">@android:color/white</item>
+        <item name="android:progressBackgroundTint">@android:color/white</item>
+        <item name="android:secondaryProgressTint">@android:color/white</item>
+    </style>
+</resources>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp">
+
+    <!-- Success Icon -->
+    <ImageView
+        android:id="@+id/success_icon"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@android:drawable/ic_dialog_info"
+        android:tint="?attr/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/success_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <!-- Success Message -->
+    <TextView
+        android:id="@+id/success_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Order Placed Successfully!"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/order_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/success_icon" />
+
+    <!-- Order Details Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/order_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:cardElevation="2dp"
+        app:layout_constraintBottom_toTopOf="@id/continue_shopping_button"
+        app:layout_constraintTop_toBottomOf="@id/success_message">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Details"
+                android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+            <TextView
+                android:id="@+id/order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                tools:text="Order ID: #ABC123" />
+
+            <TextView
+                android:id="@+id/order_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                tools:text="Date: April 21, 2025" />
+
+            <TextView
+                android:id="@+id/shipping_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Shipping Information"
+                android:textAppearance="?attr/textAppearanceSubtitle2" />
+
+            <TextView
+                android:id="@+id/shipping_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                tools:text="John Doe\n123 Main St\nAnytown, CA 12345" />
+
+            <TextView
+                android:id="@+id/payment_method_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Payment Method"
+                android:textAppearance="?attr/textAppearanceSubtitle2" />
+
+            <TextView
+                android:id="@+id/payment_method"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                tools:text="Credit Card" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Continue Shopping Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continue_shopping_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Continue Shopping"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/order_details" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

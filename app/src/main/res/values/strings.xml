@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Java Shop</string>
+    
+    <!-- Navigation Labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_categories">Categories</string>
+    <string name="nav_cart">Cart</string>
+    <string name="nav_account">Account</string>
+
+    <!-- Cart Screen -->
+    <string name="empty_cart">Your cart is empty</string>
+    <string name="add_items_message">Add items to your cart to see them here</string>
+    <string name="cart_total">Total:</string>
+    <string name="checkout">Checkout</string>
+    <string name="remove_item">Remove item</string>
+    <string name="increase_quantity">Increase quantity</string>
+    <string name="decrease_quantity">Decrease quantity</string>
+
+    <!-- Checkout Screen -->
+    <string name="order_summary">Order Summary</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="street_address_hint">Street Address</string>
+    <string name="city_hint">City</string>
+    <string name="zip_code_hint">ZIP Code</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="pay_on_delivery">Pay on Delivery</string>
+    <string name="place_order">Place Order</string>
+    <string name="order_total">Order Total:</string>
+
+    <!-- Order Confirmation Screen -->
+    <string name="order_success">Order Placed Successfully!</string>
+    <string name="order_details">Order Details</string>
+    <string name="order_id_format">Order ID: #%s</string>
+    <string name="order_date_format">Date: %s</string>
+    <string name="shipping_info">Shipping Information</string>
+    <string name="continue_shopping">Continue Shopping</string>
+
+    <!-- Error Messages -->
+    <string name="enter_name">Please enter your full name</string>
+    <string name="enter_address">Please enter your street address</string>
+    <string name="enter_city">Please enter your city</string>
+    <string name="enter_valid_zip">Please enter a valid ZIP code</string>
+    <string name="cart_empty">Your cart is empty</string>
+    <string name="max_quantity">Maximum available quantity reached</string>
+    <string name="min_quantity">Minimum quantity is 1</string>
+
+    <!-- Common -->
+    <string name="in_stock">In Stock</string>
+    <string name="out_of_stock">Out of Stock</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
+</resources>
