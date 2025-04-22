@@ -20,6 +20,7 @@ public class Product {
     @PrimaryKey
     @NonNull
     private String id;
+
     private String name;
     private String description;
     private String imageUrl;
@@ -32,6 +33,11 @@ public class Product {
     private double rating;
     private int reviewCount;
     private long lastModified;
+
+    // No-args constructor for Room
+    public Product() {
+        this.lastModified = System.currentTimeMillis();
+    }
 
     public Product(@NonNull String id, String name, String description, String imageUrl,
                   double price, int stockQuantity, String categoryId) {
