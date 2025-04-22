@@ -78,6 +78,12 @@ public class ProductDetailsFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        
+        // Set navigation icon click listener for the back button
+        toolbar.setNavigationOnClickListener(v -> {
+            // Navigate back
+            Navigation.findNavController(requireView()).navigateUp();
+        });
     }
 
     private void setupObservers() {
