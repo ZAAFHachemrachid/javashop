@@ -3,8 +3,12 @@ package com.example.java_shop.data.models;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 @Entity(
     tableName = "products",
@@ -33,12 +37,15 @@ public class Product {
     private double rating;
     private int reviewCount;
     private long lastModified;
+    private long offerValidUntilTimestamp; // Timestamp for offer validity
+    private double originalPrice; // Original price before discount
 
     // No-args constructor for Room
     public Product() {
         this.lastModified = System.currentTimeMillis();
     }
 
+    @Ignore
     public Product(@NonNull String id, String name, String description, String imageUrl,
                   double price, int stockQuantity, String categoryId) {
         this.id = id;
@@ -53,6 +60,8 @@ public class Product {
         this.rating = 0.0;
         this.reviewCount = 0;
         this.lastModified = System.currentTimeMillis();
+        this.originalPrice = 0.0;
+        this.offerValidUntilTimestamp = 0;
     }
 
     @NonNull
@@ -165,5 +174,39 @@ public class Product {
             return price;
         }
         return price * (1 - (discountPercentage / 100.0));
+    }
+    
+    public double getOriginalPrice() {
+        if (originalPrice > 0) {
+            return originalPrice;
+        }
+        // Calculate original price if not explicitly set but has discount
+        if (discountPercentage > 0) {
+            return price / (1 - (discountPercentage / 100.0));
+        }
+        return price;
+    }
+    
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+    
+    public long getOfferValidUntilTimestamp() {
+        return offerValidUntilTimestamp;
+    }
+    
+    public void setOfferValidUntilTimestamp(long offerValidUntilTimestamp) {
+        this.offerValidUntilTimestamp = offerValidUntilTimestamp;
+    }
+    
+    public String getOfferValidUntil() {
+        if (offerValidUntilTimestamp <= 0) {
+            // Default to 30 days from now if not set
+            long defaultValidPeriod = System.currentTimeMillis() + (30L * 24 * 60 * 60 * 1000);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+            return dateFormat.format(new Date(defaultValidPeriod));
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+        return dateFormat.format(new Date(offerValidUntilTimestamp));
     }
 }

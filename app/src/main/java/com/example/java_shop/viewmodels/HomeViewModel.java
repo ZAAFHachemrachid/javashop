@@ -4,22 +4,28 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import com.example.java_shop.data.models.Category;
 import com.example.java_shop.data.models.Product;
+import com.example.java_shop.data.repositories.CategoryRepository;
 import com.example.java_shop.data.repositories.ProductRepository;
 import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
     
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
     private final LiveData<List<Product>> featuredProducts;
     private final LiveData<List<Product>> specialOffers;
+    private final LiveData<List<Category>> categories;
     private final MutableLiveData<NavigationCommand> navigationCommand;
 
     public HomeViewModel(Application application) {
         super(application);
         productRepository = new ProductRepository(application);
+        categoryRepository = new CategoryRepository(application);
         featuredProducts = productRepository.getFeaturedProducts();
         specialOffers = productRepository.getSpecialOffers();
+        categories = categoryRepository.getAllCategories();
         navigationCommand = new MutableLiveData<>();
     }
 
@@ -29,6 +35,10 @@ public class HomeViewModel extends AndroidViewModel {
 
     public LiveData<List<Product>> getSpecialOffers() {
         return specialOffers;
+    }
+    
+    public LiveData<List<Category>> getCategories() {
+        return categories;
     }
 
     public LiveData<NavigationCommand> getNavigationCommand() {
