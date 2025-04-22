@@ -42,7 +42,7 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryAdapter.Categ
 
         CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            iconView = itemView.findViewById(R.id.category_icon);
+            iconView = itemView.findViewById(R.id.category_image);
             nameView = itemView.findViewById(R.id.category_name);
         }
 

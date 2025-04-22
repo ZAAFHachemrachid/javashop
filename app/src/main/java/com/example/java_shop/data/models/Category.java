@@ -2,9 +2,20 @@ package com.example.java_shop.data.models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.annotation.NonNull;
 
-@Entity(tableName = "categories")
+@Entity(
+    tableName = "categories",
+    foreignKeys = @ForeignKey(
+        entity = Category.class,
+        parentColumns = "id",
+        childColumns = "parentCategoryId",
+        onDelete = ForeignKey.CASCADE
+    ),
+    indices = {@Index("parentCategoryId")}
+)
 public class Category {
     @PrimaryKey
     @NonNull

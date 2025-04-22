@@ -94,14 +94,14 @@ public class CategoryRepository {
         executorService.execute(() -> {
             // Create main product categories
             List<Category> mainCategories = List.of(
-                new Category("CPU", "Processors", "Central Processing Units", "cpu_icon", 1, true, null),
-                new Category("GPU", "Graphics Cards", "Graphics Processing Units", "gpu_icon", 2, true, null),
-                new Category("MB", "Motherboards", "Motherboards", "mb_icon", 3, true, null),
-                new Category("RAM", "Memory", "RAM modules", "ram_icon", 4, true, null),
-                new Category("STORAGE", "Storage", "Storage devices", "storage_icon", 5, true, null),
-                new Category("PSU", "Power Supplies", "Power Supply Units", "psu_icon", 6, true, null),
-                new Category("CASE", "Cases", "Computer Cases", "case_icon", 7, true, null),
-                new Category("COOLING", "Cooling", "Cooling Systems", "cooling_icon", 8, true, null)
+                new Category("CPU", "Processors", "Central Processing Units", "@drawable/ic_category_cpu", 1, true, null),
+                new Category("GPU", "Graphics Cards", "Graphics Processing Units", "@drawable/ic_category_gpu", 2, true, null),
+                new Category("MB", "Motherboards", "Motherboards", "@drawable/ic_category_motherboard", 3, true, null),
+                new Category("RAM", "Memory", "RAM modules", "@drawable/ic_category_memory", 4, true, null),
+                new Category("STORAGE", "Storage", "Storage devices", "@drawable/ic_category_storage", 5, true, null),
+                new Category("PSU", "Power Supplies", "Power Supply Units", "@drawable/ic_category_psu", 6, true, null),
+                new Category("CASE", "Cases", "Computer Cases", "@drawable/ic_category_case", 7, true, null),
+                new Category("COOLING", "Cooling", "Cooling Systems", "@drawable/ic_category_cooling", 8, true, null)
             );
             categoryDao.insertAll(mainCategories);
         });

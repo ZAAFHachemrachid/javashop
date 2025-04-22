@@ -7,6 +7,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.java_shop.data.repositories.CategoryRepository;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -19,6 +20,11 @@ public class MainActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             Log.d(TAG, "Layout set");
+
+            // Initialize Categories
+            CategoryRepository categoryRepository = new CategoryRepository(getApplication());
+            categoryRepository.initializeDefaultCategories();
+            Log.d(TAG, "Categories initialized");
 
             // Initialize Bottom Navigation
             bottomNav = findViewById(R.id.bottom_nav);

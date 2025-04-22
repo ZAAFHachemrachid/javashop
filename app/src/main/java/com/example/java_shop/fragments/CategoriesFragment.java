@@ -43,15 +43,31 @@ public class CategoriesFragment extends Fragment implements CategoryAdapter.OnCa
         setupObservers();
     }
 
+    private View emptyState;
+    private View loadingIndicator;
+
     private void setupViews(View view) {
+        // Setup RecyclerView
         categoriesRecyclerView = view.findViewById(R.id.categories_recycler_view);
         categoriesRecyclerView.setAdapter(categoryAdapter);
+
+        // Find views
+        emptyState = view.findViewById(R.id.empty_state);
+        loadingIndicator = view.findViewById(R.id.loading_indicator);
     }
 
     private void setupObservers() {
         // Observe categories
         viewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
-            categoryAdapter.submitList(categories);
+            loadingIndicator.setVisibility(View.GONE);
+            if (categories == null || categories.isEmpty()) {
+                emptyState.setVisibility(View.VISIBLE);
+                categoriesRecyclerView.setVisibility(View.GONE);
+            } else {
+                emptyState.setVisibility(View.GONE);
+                categoriesRecyclerView.setVisibility(View.VISIBLE);
+                categoryAdapter.submitList(categories);
+            }
         });
 
         // Observe navigation commands

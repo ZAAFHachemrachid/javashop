@@ -20,13 +20,29 @@ public class ImageLoader {
      * @param imageView The target ImageView
      * @param url The URL of the image to load
      */
-    public static void loadImage(ImageView imageView, String url) {
-        if (imageView == null) return;
+    public static void loadImage(ImageView imageView, String source) {
+        if (imageView == null || source == null) return;
 
-        Glide.with(imageView.getContext())
-                .load(url)
+        if (source.startsWith("@drawable/")) {
+            String resourceName = source.substring(10); // Remove "@drawable/"
+            int resourceId = imageView.getContext().getResources()
+                .getIdentifier(resourceName, "drawable", imageView.getContext().getPackageName());
+            if (resourceId != 0) {
+                Glide.with(imageView.getContext())
+                    .load(resourceId)
+                    .apply(DEFAULT_OPTIONS)
+                    .into(imageView);
+            } else {
+                // Fallback to error drawable if resource not found
+                imageView.setImageResource(R.drawable.error_image);
+            }
+        } else {
+            // Handle URLs as before
+            Glide.with(imageView.getContext())
+                .load(source)
                 .apply(DEFAULT_OPTIONS)
                 .into(imageView);
+        }
     }
 
     /**
