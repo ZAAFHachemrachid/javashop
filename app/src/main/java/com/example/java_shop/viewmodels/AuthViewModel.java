@@ -32,6 +32,7 @@ public class AuthViewModel extends AndroidViewModel {
         }
 
         String hashedPassword = hashPassword(password);
+        // Since login() returns LiveData, its callback will already be on the main thread
         userRepository.login(email, hashedPassword).observeForever(user -> {
             if (user != null) {
                 sessionManager.createSession(user.getId(), user.getEmail());
@@ -49,14 +50,14 @@ public class AuthViewModel extends AndroidViewModel {
 
         userRepository.checkEmailExists(email, exists -> {
             if (exists) {
-                signupResult.setValue(new AuthResult(false, "Email already registered"));
+                signupResult.postValue(new AuthResult(false, "Email already registered"));
                 return;
             }
 
             String hashedPassword = hashPassword(password);
             User newUser = new User(name, email, phone, "", hashedPassword);
             userRepository.insert(newUser);
-            signupResult.setValue(new AuthResult(true, null));
+            signupResult.postValue(new AuthResult(true, null));
         });
     }
 
@@ -67,7 +68,7 @@ public class AuthViewModel extends AndroidViewModel {
 
         userRepository.checkEmailExists(email, exists -> {
             if (!exists) {
-                passwordResetResult.setValue(new AuthResult(false, "Email not found"));
+                passwordResetResult.postValue(new AuthResult(false, "Email not found"));
                 return;
             }
 
@@ -76,7 +77,7 @@ public class AuthViewModel extends AndroidViewModel {
             // 2. Save it to the database with an expiration
             // 3. Send an email with a reset link
             // For demo purposes, we'll just simulate success
-            passwordResetResult.setValue(new AuthResult(true, null));
+            passwordResetResult.postValue(new AuthResult(true, null));
         });
     }
 

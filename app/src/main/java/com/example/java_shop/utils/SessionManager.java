@@ -1,8 +1,13 @@
 package com.example.java_shop.utils;
 
 import android.content.Context;
+import com.example.java_shop.R;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.NavController;
 
 public class SessionManager {
     private static final String TAG = "SessionManager";
@@ -10,9 +15,12 @@ public class SessionManager {
     private static final String KEY_USER_ID = "userId";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
+    private static final String KEY_SAVED_DESTINATION = "savedDestination";
+    private static final String KEY_SAVED_ARGS = "savedArgs";
     
     private final SharedPreferences prefs;
     private static SessionManager instance;
+    private final MutableLiveData<Boolean> authenticationState = new MutableLiveData<>(false);
 
     private SessionManager(Context context) {
         // Use regular SharedPreferences with private mode
@@ -32,12 +40,14 @@ public class SessionManager {
         editor.putString(KEY_EMAIL, email);
         editor.putBoolean(KEY_IS_LOGGED_IN, true);
         editor.apply();
+        authenticationState.postValue(true);
     }
 
     public void clearSession() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
         editor.apply();
+        authenticationState.postValue(false);
     }
 
     public boolean isLoggedIn() {
@@ -60,5 +70,69 @@ public class SessionManager {
 
     public boolean hasValidSession() {
         return isLoggedIn() && getUserId() != -1 && getEmail() != null;
+    }
+
+    /**
+     * Get the authentication state as LiveData for observing changes
+     */
+    public LiveData<Boolean> getAuthenticationState() {
+        return authenticationState;
+    }
+
+    /**
+     * Save the intended destination for post-login navigation
+     */
+    public void saveIntendedDestination(int destinationId, Bundle args) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(KEY_SAVED_DESTINATION, destinationId);
+        if (args != null) {
+            editor.putString(KEY_SAVED_ARGS, args.toString());
+        }
+        editor.apply();
+    }
+
+    /**
+     * Clear saved destination after successful navigation
+     */
+    public void clearSavedDestination() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(KEY_SAVED_DESTINATION);
+        editor.remove(KEY_SAVED_ARGS);
+        editor.apply();
+    }
+
+    /**
+     * Get saved destination ID or -1 if none exists
+     */
+    public int getSavedDestinationId() {
+        return prefs.getInt(KEY_SAVED_DESTINATION, -1);
+    }
+
+    /**
+     * Get saved destination arguments or null if none exists
+     */
+    public String getSavedDestinationArgs() {
+        return prefs.getString(KEY_SAVED_ARGS, null);
+    }
+
+    /**
+     * Handle authentication check and navigation
+     * @return true if authenticated, false if redirected to login
+     */
+    public boolean checkAuthenticationAndRedirect(NavController navController) {
+        if (!hasValidSession()) {
+            // Save current destination if not already on login screen
+            if (navController.getCurrentDestination() != null &&
+                navController.getCurrentDestination().getId() != R.id.loginFragment) {
+                saveIntendedDestination(
+                    navController.getCurrentDestination().getId(),
+                    navController.getCurrentBackStackEntry() != null ?
+                        navController.getCurrentBackStackEntry().getArguments() : null
+                );
+            }
+            navController.navigate(R.id.loginFragment);
+            return false;
+        }
+        return true;
     }
 }

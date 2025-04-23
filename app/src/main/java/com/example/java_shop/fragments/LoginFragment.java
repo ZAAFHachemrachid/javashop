@@ -8,9 +8,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import com.example.java_shop.fragments.base.BaseFragment;
 import com.example.java_shop.R;
 import com.example.java_shop.viewmodels.AuthViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -19,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends BaseFragment {
 
     private AuthViewModel viewModel;
     private TextInputLayout emailLayout;
@@ -107,8 +108,28 @@ public class LoginFragment extends Fragment {
     }
 
     private void navigateToHome() {
-        Navigation.findNavController(requireView())
-                .navigate(R.id.action_loginFragment_to_homeFragment);
+        // Check for saved destination
+        int savedDestinationId = sessionManager.getSavedDestinationId();
+        if (savedDestinationId != -1 && savedDestinationId != R.id.loginFragment) {
+            // Get saved arguments if they exist
+            String savedArgs = sessionManager.getSavedDestinationArgs();
+            Bundle args = null;
+            if (savedArgs != null) {
+                args = new Bundle();
+                // Parse saved args string and populate bundle
+                // This is a simplified version - you might need more complex parsing
+                args.putString("args", savedArgs);
+            }
+            
+            // Navigate to saved destination
+            navController.navigate(savedDestinationId, args);
+            
+            // Clear saved destination
+            sessionManager.clearSavedDestination();
+        } else {
+            // Default navigation to home
+            navController.navigate(R.id.action_loginFragment_to_homeFragment);
+        }
     }
 
     private void showError(String error) {

@@ -8,9 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import com.example.java_shop.fragments.base.BaseProtectedFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.java_shop.R;
@@ -25,7 +25,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseProtectedFragment {
 
     private HomeViewModel viewModel;
     private ViewPager2 featuredProductsViewPager;
@@ -120,6 +120,10 @@ public class HomeFragment extends Fragment {
 
         // Observe navigation commands
         viewModel.getNavigationCommand().observe(getViewLifecycleOwner(), command -> {
+            if (command != null && !sessionManager.hasValidSession()) {
+                // Don't navigate if not authenticated
+                return;
+            }
             if (command != null) {
                 Bundle args = new Bundle();
                 args.putString("productId", command.getArg());
@@ -163,6 +167,14 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         if (featuredProductsViewPager != null && autoScrollRunnable != null) {
             featuredProductsViewPager.removeCallbacks(autoScrollRunnable);
+        }
+    }
+
+    @Override
+    protected void onAuthenticationChanged(boolean isAuthenticated) {
+        if (isAuthenticated) {
+            // Data will be automatically refreshed through LiveData observers
+            setupObservers();
         }
     }
 }

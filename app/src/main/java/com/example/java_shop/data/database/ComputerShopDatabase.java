@@ -24,7 +24,7 @@ import com.example.java_shop.utils.Converters;
         Order.class,
         OrderItem.class
     },
-    version = 6, // Increment version after schema changes:
+    version = 7, // Increment version after schema changes:
     // v1: Initial schema
     // v2: Added new fields to Product
     // v3: Updated Category schema
