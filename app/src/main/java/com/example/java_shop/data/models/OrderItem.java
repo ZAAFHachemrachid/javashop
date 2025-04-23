@@ -2,6 +2,7 @@ package com.example.java_shop.data.models;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(
@@ -19,6 +20,10 @@ import androidx.room.PrimaryKey;
             childColumns = "productId",
             onDelete = ForeignKey.NO_ACTION
         )
+    },
+    indices = {
+        @Index("orderId"),
+        @Index("productId")
     }
 )
 public class OrderItem {

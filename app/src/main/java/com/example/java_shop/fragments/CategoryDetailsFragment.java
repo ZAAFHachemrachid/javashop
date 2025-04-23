@@ -56,7 +56,7 @@ public class CategoryDetailsFragment extends Fragment implements
         viewModel = new ViewModelProvider(this).get(CategoryDetailsViewModel.class);
         
         // Get category ID from navigation args
-        String categoryId = CategoryDetailsFragmentArgs.fromBundle(getArguments()).getCategoryId();
+        int categoryId = CategoryDetailsFragmentArgs.fromBundle(getArguments()).getCategoryId();
         viewModel.setCategoryId(categoryId);
         
         // Initialize adapters

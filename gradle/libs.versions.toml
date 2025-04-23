@@ -11,6 +11,7 @@ room = "2.6.1"
 lifecycle = "2.7.0"
 glide = "4.16.0"
 roomCommonJvm = "2.7.0"
+securityCrypto = "1.1.0-alpha06"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -36,8 +37,8 @@ lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime", 
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
+security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
-

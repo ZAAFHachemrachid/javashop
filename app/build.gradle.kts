@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     implementation(libs.room.common.jvm)
+    implementation(libs.security.crypto)
     annotationProcessor(libs.room.compiler)
     
     // Lifecycle components

@@ -4,70 +4,53 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.example.java_shop.data.models.User;
 import com.example.java_shop.data.models.Address;
 import com.example.java_shop.data.models.Order;
-import com.example.java_shop.data.repositories.UserRepository;
+import com.example.java_shop.data.models.User;
 import com.example.java_shop.data.repositories.AddressRepository;
 import com.example.java_shop.data.repositories.OrderRepository;
+import com.example.java_shop.data.repositories.UserRepository;
+import com.example.java_shop.utils.SessionManager;
 import java.util.List;
 
 public class AccountViewModel extends AndroidViewModel {
     private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
     private final OrderRepository orderRepository;
+    private final AddressRepository addressRepository;
+    private final SessionManager sessionManager;
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
-    
-    // Current user ID (would be set after login in a real app)
-    private int currentUserId = 1; // Temporary for development
+    private LiveData<User> currentUser;
+    private LiveData<List<Order>> userOrders;
+    private LiveData<List<Address>> userAddresses;
 
     public AccountViewModel(Application application) {
         super(application);
         userRepository = new UserRepository(application);
-        addressRepository = new AddressRepository(application);
         orderRepository = new OrderRepository(application);
+        addressRepository = new AddressRepository(application);
+        sessionManager = SessionManager.getInstance(application);
     }
 
-    // User operations
+    public void loadUserData(int userId) {
+        currentUser = userRepository.getUserById(userId);
+        userOrders = orderRepository.getOrdersForUser(userId);
+        userAddresses = addressRepository.getAddressesForUser(userId);
+    }
+
     public LiveData<User> getCurrentUser() {
-        return userRepository.getUserById(currentUserId);
+        return currentUser;
     }
 
-    public void updateUserProfile(User user) {
-        userRepository.update(user);
+    public LiveData<List<Order>> getUserOrders() {
+        return userOrders;
     }
 
-    public void updateProfilePicture(String picturePath) {
-        userRepository.updateProfilePicture(currentUserId, picturePath);
-    }
-
-    public void updatePassword(String currentPassword, String newPassword, 
-                             Runnable onSuccess, Runnable onFailure) {
-        userRepository.updatePassword(
-            currentUserId,
-            currentPassword,
-            newPassword,
-            onSuccess,
-            onFailure
-        );
-    }
-
-    // Address operations
     public LiveData<List<Address>> getUserAddresses() {
-        return addressRepository.getAddressesForUser(currentUserId);
+        return userAddresses;
     }
 
-    public LiveData<Address> getDefaultAddress() {
-        return addressRepository.getDefaultAddress(currentUserId);
-    }
-
-    public void addAddress(Address address) {
-        address.setUserId(currentUserId);
-        addressRepository.insert(address);
-    }
-
-    public void updateAddress(Address address) {
-        addressRepository.update(address);
+    public LiveData<String> getErrorMessage() {
+        return errorMessage;
     }
 
     public void deleteAddress(Address address) {
@@ -75,35 +58,11 @@ public class AccountViewModel extends AndroidViewModel {
     }
 
     public void setDefaultAddress(int addressId) {
-        addressRepository.setDefaultAddress(currentUserId, addressId);
-    }
-
-    // Order operations
-    public LiveData<List<Order>> getUserOrders() {
-        return orderRepository.getOrdersForUser(currentUserId);
-    }
-
-    public LiveData<Order> getOrderDetails(int orderId) {
-        return orderRepository.getOrderById(orderId);
-    }
-
-    public LiveData<Double> getTotalSpent() {
-        return orderRepository.getTotalSpentByUser(currentUserId);
-    }
-
-    // Error handling
-    public LiveData<String> getErrorMessage() {
-        return errorMessage;
-    }
-
-    private void setErrorMessage(String message) {
-        errorMessage.setValue(message);
-    }
-
-    // Clean up
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        // Add any cleanup code if needed
+        int userId = sessionManager.getUserId();
+        if (userId != -1) {
+            addressRepository.setDefaultAddress(userId, addressId);
+        } else {
+            errorMessage.setValue("User not logged in");
+        }
     }
 }

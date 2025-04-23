@@ -55,10 +55,10 @@ public class OrderConfirmationFragment extends Fragment {
     private void displayOrderDetails() {
         // Get order ID from arguments
         OrderConfirmationFragmentArgs args = OrderConfirmationFragmentArgs.fromBundle(getArguments());
-        String orderIdString = args.getOrderId();
+        int orderIdValue = args.getOrderId();
 
         // Set order ID
-        orderId.setText(getString(R.string.order_id_format, orderIdString));
+        orderId.setText(getString(R.string.order_id_format, String.valueOf(orderIdValue)));
 
         // Set order date
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());

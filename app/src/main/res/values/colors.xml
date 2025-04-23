@@ -1,43 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary brand colors -->
-    <color name="primary">#1976D2</color>
-    <color name="primary_variant">#1565C0</color>
-    <color name="primary_dark">#0D47A1</color>
-    <color name="on_primary">#FFFFFF</color>
+    <!-- Primary colors -->
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#BBDEFB</color>
 
-    <!-- Secondary brand colors -->
-    <color name="secondary">#00BCD4</color>
-    <color name="secondary_variant">#00ACC1</color>
-    <color name="secondary_dark">#0097A7</color>
-    <color name="on_secondary">#000000</color>
+    <!-- Secondary colors -->
+    <color name="secondary">#FFC107</color>
+    <color name="secondary_dark">#FFA000</color>
+    <color name="secondary_light">#FFECB3</color>
 
-    <!-- Additional colors -->
+    <!-- Default Android theme colors (required) -->
+    <color name="purple_200">#BB86FC</color>
+    <color name="purple_500">#6200EE</color>
+    <color name="purple_700">#3700B3</color>
+    <color name="teal_200">#03DAC5</color>
+    <color name="teal_700">#018786</color>
+
+    <!-- Error colors -->
     <color name="error">#B00020</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="background">#FAFAFA</color>
-    <color name="on_background">#000000</color>
-    <color name="on_surface">#000000</color>
-    <color name="on_error">#FFFFFF</color>
+    <color name="error_light">#EF5350</color>
 
-    <!-- Status colors -->
+    <!-- Success colors -->
     <color name="success">#4CAF50</color>
-    <color name="warning">#FFC107</color>
-    <color name="info">#2196F3</color>
+    <color name="success_light">#A5D6A7</color>
+
+    <!-- Neutral colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_50">#FAFAFA</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_200">#EEEEEE</color>
+    <color name="gray_300">#E0E0E0</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_800">#424242</color>
+    <color name="gray_900">#212121</color>
+
+    <!-- Background colors -->
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
 
     <!-- Text colors -->
-    <color name="text_primary">#DE000000</color>
-    <color name="text_secondary">#99000000</color>
-    <color name="text_disabled">#61000000</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#9E9E9E</color>
+    <color name="text_disabled">#BDBDBD</color>
 
-    <!-- Divider and stroke colors -->
-    <color name="divider">#1F000000</color>
-    <color name="stroke">#1F000000</color>
+    <!-- Other UI colors -->
+    <color name="divider">#E0E0E0</color>
+    <color name="ripple_color">#1F000000</color>
+    <color name="scrim">#52000000</color>
+    
+    <!-- Status colors -->
+    <color name="pending">#FFC107</color>
+    <color name="processing">#2196F3</color>
+    <color name="shipped">#FF9800</color>
+    <color name="delivered">#4CAF50</color>
+    <color name="cancelled">#F44336</color>
 
     <!-- Bottom navigation colors -->
-    <color name="nav_selected">@color/primary</color>
-    <color name="nav_unselected">#757575</color>
-
-    <!-- Ripple effect color -->
-    <color name="ripple">#1F000000</color>
+    <color name="bottom_nav_selected">@color/primary</color>
+    <color name="bottom_nav_unselected">@color/gray_600</color>
 </resources>

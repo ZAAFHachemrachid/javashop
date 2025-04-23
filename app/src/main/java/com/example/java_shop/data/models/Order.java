@@ -2,6 +2,7 @@ package com.example.java_shop.data.models;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.util.Date;
 
@@ -12,7 +13,8 @@ import java.util.Date;
         parentColumns = "id",
         childColumns = "userId",
         onDelete = ForeignKey.CASCADE
-    )
+    ),
+    indices = {@Index("userId")}
 )
 public class Order {
     @PrimaryKey(autoGenerate = true)
