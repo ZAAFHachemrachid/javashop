@@ -15,8 +15,12 @@ public class SessionManager {
     private static final String KEY_USER_ID = "userId";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
+    private static final String KEY_LAST_ACTIVITY = "lastActivity";
     private static final String KEY_SAVED_DESTINATION = "savedDestination";
     private static final String KEY_SAVED_ARGS = "savedArgs";
+    
+    // Session timeout after 30 minutes of inactivity
+    private static final long SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds
     
     private final SharedPreferences prefs;
     private static SessionManager instance;
@@ -39,6 +43,7 @@ public class SessionManager {
         editor.putInt(KEY_USER_ID, userId);
         editor.putString(KEY_EMAIL, email);
         editor.putBoolean(KEY_IS_LOGGED_IN, true);
+        editor.putLong(KEY_LAST_ACTIVITY, System.currentTimeMillis());
         editor.apply();
         authenticationState.postValue(true);
     }
@@ -69,7 +74,38 @@ public class SessionManager {
     }
 
     public boolean hasValidSession() {
-        return isLoggedIn() && getUserId() != -1 && getEmail() != null;
+        if (!isLoggedIn() || getUserId() == -1 || getEmail() == null) {
+            return false;
+        }
+        
+        long lastActivity = getLastActivityTime();
+        long currentTime = System.currentTimeMillis();
+        
+        // Check if session has timed out
+        if (currentTime - lastActivity > SESSION_TIMEOUT) {
+            clearSession();
+            return false;
+        }
+        
+        // Update last activity time
+        updateLastActivity();
+        return true;
+    }
+    
+    /**
+     * Get the last activity timestamp
+     */
+    private long getLastActivityTime() {
+        return prefs.getLong(KEY_LAST_ACTIVITY, 0);
+    }
+    
+    /**
+     * Update the last activity timestamp
+     */
+    public void updateLastActivity() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong(KEY_LAST_ACTIVITY, System.currentTimeMillis());
+        editor.apply();
     }
 
     /**

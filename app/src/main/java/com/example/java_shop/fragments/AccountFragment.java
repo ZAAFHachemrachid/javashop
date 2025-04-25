@@ -9,8 +9,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.java_shop.fragments.base.BaseProtectedFragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +27,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.example.java_shop.utils.ImageLoader;
 
-public class AccountFragment extends Fragment implements 
+public class AccountFragment extends BaseProtectedFragment implements
         OrderAdapter.OrderClickListener,
         AddressAdapter.AddressClickListener {
 
@@ -42,6 +42,9 @@ public class AccountFragment extends Fragment implements
     private View unauthenticatedContent;
     private Button loginButton;
     private Button signupButton;
+    private View progressBar;
+    private View errorCard;
+    private TextView errorText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -52,15 +55,22 @@ public class AccountFragment extends Fragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sessionManager = SessionManager.getInstance(requireContext());
-        accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
-        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-
+        
+        // Initialize views first
         initializeViews(view);
         setupRecyclerViews(view);
+        
+        // Initialize ViewModels
+        accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        
+        // Set up click listeners
         setupClickListeners(view);
-        observeViewModels();
-        checkAuthenticationState();
+        
+        // Update UI based on authentication state
+        SessionManager manager = getSessionManager();
+        boolean isAuthenticated = manager != null && manager.hasValidSession();
+        updateAuthenticationState(isAuthenticated);
     }
 
     private void initializeViews(View view) {
@@ -72,6 +82,9 @@ public class AccountFragment extends Fragment implements
         userPhone = view.findViewById(R.id.userPhone);
         loginButton = view.findViewById(R.id.loginButton);
         signupButton = view.findViewById(R.id.signupButton);
+        progressBar = view.findViewById(R.id.progressBar);
+        errorCard = view.findViewById(R.id.errorCard);
+        errorText = view.findViewById(R.id.errorText);
     }
 
     private void setupRecyclerViews(View view) {
@@ -101,9 +114,10 @@ public class AccountFragment extends Fragment implements
         // Profile section
         ImageButton editProfileButton = view.findViewById(R.id.editProfileButton);
         editProfileButton.setOnClickListener(v -> {
-            if (sessionManager.getUserId() != -1) {
+            SessionManager manager = getSessionManager();
+            if (manager != null && manager.getUserId() != -1) {
                 Bundle args = new Bundle();
-                args.putInt("userId", sessionManager.getUserId());
+                args.putInt("userId", manager.getUserId());
                 Navigation.findNavController(v)
                         .navigate(R.id.action_accountFragment_to_editProfileFragment, args);
             }
@@ -131,16 +145,49 @@ public class AccountFragment extends Fragment implements
         accountViewModel.getUserOrders().observe(getViewLifecycleOwner(), orderAdapter::submitList);
         accountViewModel.getUserAddresses().observe(getViewLifecycleOwner(), addressAdapter::submitList);
         accountViewModel.getErrorMessage().observe(getViewLifecycleOwner(), this::showError);
+        accountViewModel.getViewState().observe(getViewLifecycleOwner(), this::handleViewState);
     }
 
-    private void checkAuthenticationState() {
-        boolean isAuthenticated = sessionManager.hasValidSession();
+    private void handleViewState(AccountViewModel.ViewState state) {
+        switch (state) {
+            case LOADING:
+                progressBar.setVisibility(View.VISIBLE);
+                errorCard.setVisibility(View.GONE);
+                break;
+            case SUCCESS:
+                progressBar.setVisibility(View.GONE);
+                errorCard.setVisibility(View.GONE);
+                break;
+            case ERROR:
+                progressBar.setVisibility(View.GONE);
+                errorCard.setVisibility(View.VISIBLE);
+                break;
+            case IDLE:
+                progressBar.setVisibility(View.GONE);
+                errorCard.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    /**
+     * Update UI and data based on authentication state
+     */
+    private void updateAuthenticationState(boolean isAuthenticated) {
         authenticatedContent.setVisibility(isAuthenticated ? View.VISIBLE : View.GONE);
         unauthenticatedContent.setVisibility(isAuthenticated ? View.GONE : View.VISIBLE);
 
         if (isAuthenticated) {
-            accountViewModel.loadUserData(sessionManager.getUserId());
+            SessionManager manager = getSessionManager();
+            if (manager != null) {
+                accountViewModel.loadUserData(manager.getUserId());
+                observeViewModels();
+            }
         }
+    }
+
+    @Override
+    protected void onAuthenticationChanged(boolean isAuthenticated) {
+        updateAuthenticationState(isAuthenticated);
     }
 
     private void updateUserInfo(User user) {
@@ -167,11 +214,10 @@ public class AccountFragment extends Fragment implements
 
     private void showError(String error) {
         if (error != null && !error.isEmpty()) {
-            new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Error")
-                .setMessage(error)
-                .setPositiveButton("OK", null)
-                .show();
+            errorText.setText(error);
+            errorCard.setVisibility(View.VISIBLE);
+        } else {
+            errorCard.setVisibility(View.GONE);
         }
     }
 

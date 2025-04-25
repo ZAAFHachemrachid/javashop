@@ -18,7 +18,22 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        sessionManager = SessionManager.getInstance(context);
+        try {
+            sessionManager = SessionManager.getInstance(context);
+        } catch (Exception e) {
+            android.util.Log.e("BaseFragment", "Error initializing SessionManager", e);
+        }
+    }
+
+    protected SessionManager getSessionManager() {
+        if (sessionManager == null) {
+            try {
+                sessionManager = SessionManager.getInstance(requireContext());
+            } catch (Exception e) {
+                android.util.Log.e("BaseFragment", "Error initializing SessionManager", e);
+            }
+        }
+        return sessionManager;
     }
 
     @Override

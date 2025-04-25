@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Primary colors -->
-    <color name="primary">#2196F3</color>
-    <color name="primary_dark">#1976D2</color>
-    <color name="primary_light">#BBDEFB</color>
+    <color name="primary">#FF69B4</color>         <!-- Hot Pink -->
+    <color name="primary_dark">#FF1493</color>    <!-- Deep Pink -->
+    <color name="primary_light">#FFC0CB</color>   <!-- Pink -->
 
     <!-- Secondary colors -->
-    <color name="secondary">#FFC107</color>
-    <color name="secondary_dark">#FFA000</color>
-    <color name="secondary_light">#FFECB3</color>
+    <color name="secondary">#FFB6C1</color>       <!-- Light Pink -->
+    <color name="secondary_dark">#FF69B4</color>  <!-- Hot Pink -->
+    <color name="secondary_light">#FFF0F5</color> <!-- Lavender Blush -->
 
     <!-- Default Android theme colors (required) -->
     <color name="purple_200">#BB86FC</color>

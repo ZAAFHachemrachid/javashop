@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import com.example.java_shop.utils.SessionManager;
 
 /**
  * Base fragment class for screens that require authentication.
@@ -37,7 +38,10 @@ public abstract class BaseProtectedFragment extends BaseFragment {
         super.onDestroyView();
         // Clean up observer
         if (authObserver != null) {
-            sessionManager.getAuthenticationState().removeObserver(authObserver);
+            SessionManager manager = getSessionManager();
+            if (manager != null) {
+                manager.getAuthenticationState().removeObserver(authObserver);
+            }
         }
     }
 
@@ -49,14 +53,18 @@ public abstract class BaseProtectedFragment extends BaseFragment {
         checkAuthentication();
         
         // Start observing auth changes
-        sessionManager.getAuthenticationState().observe(getViewLifecycleOwner(), authObserver);
+        SessionManager manager = getSessionManager();
+        if (manager != null) {
+            manager.getAuthenticationState().observe(getViewLifecycleOwner(), authObserver);
+        }
     }
 
     /**
      * Checks if user is authenticated and redirects to login if not
      */
     private void checkAuthentication() {
-        if (!sessionManager.hasValidSession()) {
+        SessionManager manager = getSessionManager();
+        if (manager == null || !manager.hasValidSession()) {
             redirectToLogin();
         }
     }
@@ -76,7 +84,10 @@ public abstract class BaseProtectedFragment extends BaseFragment {
      */
     private void redirectToLogin() {
         if (navController != null && navController.getCurrentDestination() != null) {
-            sessionManager.checkAuthenticationAndRedirect(navController);
+            SessionManager manager = getSessionManager();
+            if (manager != null) {
+                manager.checkAuthenticationAndRedirect(navController);
+            }
         }
     }
 }

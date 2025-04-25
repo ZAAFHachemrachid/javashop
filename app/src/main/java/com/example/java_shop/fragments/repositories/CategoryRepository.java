@@ -94,14 +94,11 @@ public class CategoryRepository {
         executorService.execute(() -> {
             // Create main product categories
             List<Category> mainCategories = List.of(
-                new Category("CPU", "Processors", "Central Processing Units", "@drawable/ic_category_cpu", 1, true, null),
-                new Category("GPU", "Graphics Cards", "Graphics Processing Units", "@drawable/ic_category_gpu", 2, true, null),
-                new Category("MB", "Motherboards", "Motherboards", "@drawable/ic_category_motherboard", 3, true, null),
-                new Category("RAM", "Memory", "RAM modules", "@drawable/ic_category_memory", 4, true, null),
-                new Category("STORAGE", "Storage", "Storage devices", "@drawable/ic_category_storage", 5, true, null),
-                new Category("PSU", "Power Supplies", "Power Supply Units", "@drawable/ic_category_psu", 6, true, null),
-                new Category("CASE", "Cases", "Computer Cases", "@drawable/ic_category_case", 7, true, null),
-                new Category("COOLING", "Cooling", "Cooling Systems", "@drawable/ic_category_cooling", 8, true, null)
+                new Category("FACE", "Face Products", "Foundation, Concealer, Blush, and more", "@drawable/ic_category_face", 1, true, null),
+                new Category("EYE", "Eye Products", "Eyeshadow, Mascara, Eyeliner, and more", "@drawable/ic_category_eye", 2, true, null),
+                new Category("LIP", "Lip Products", "Lipstick, Lip Gloss, Lip Liner, and more", "@drawable/ic_category_lips", 3, true, null),
+                new Category("SKINCARE", "Skin Care", "Moisturizers, Serums, Toners, and more", "@drawable/ic_category_skincare", 4, true, null),
+                new Category("TOOLS", "Tools & Accessories", "Brushes, Sponges, and other beauty tools", "@drawable/ic_category_tools", 5, true, null)
             );
             categoryDao.insertAll(mainCategories);
         });

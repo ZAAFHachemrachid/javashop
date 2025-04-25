@@ -55,7 +55,7 @@ public abstract class ComputerShopDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(
                         context.getApplicationContext(),
                         ComputerShopDatabase.class,
-                        "computer_shop_db"
+                        "cosmetics_shop_db"
                     )
                     .fallbackToDestructiveMigration() // For development only
                     .build();

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Primary colors -->
-    <color name="primary">#90CAF9</color>
-    <color name="primary_dark">#5D99C6</color>
-    <color name="primary_light">#C3FDFF</color>
+    <color name="primary">#FF80AB</color>         <!-- Light Pink -->
+    <color name="primary_dark">#C51162</color>    <!-- Dark Pink -->
+    <color name="primary_light">#FFB2DD</color>   <!-- Very Light Pink -->
 
     <!-- Secondary colors -->
-    <color name="secondary">#FFD54F</color>
-    <color name="secondary_dark">#C8A415</color>
-    <color name="secondary_light">#FFF7D6</color>
+    <color name="secondary">#F48FB1</color>       <!-- Light Pink variant -->
+    <color name="secondary_dark">#BF5F82</color>  <!-- Darker Pink -->
+    <color name="secondary_light">#FFC1E3</color> <!-- Very Light Pink variant -->
 
     <!-- Default Android theme colors (required) -->
     <color name="purple_200">#BB86FC</color>

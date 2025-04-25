@@ -1,6 +1,8 @@
 package com.example.java_shop.data.repositories;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 import androidx.lifecycle.LiveData;
 import com.example.java_shop.data.database.ComputerShopDatabase;
 import com.example.java_shop.data.database.UserDao;
@@ -11,19 +13,32 @@ import java.util.concurrent.Executors;
 public class UserRepository {
     private final UserDao userDao;
     private final ExecutorService executorService;
+    private final Handler handler;
 
     public UserRepository(Application application) {
         ComputerShopDatabase database = ComputerShopDatabase.getDatabase(application);
         userDao = database.userDao();
         executorService = Executors.newSingleThreadExecutor();
+        handler = new Handler(Looper.getMainLooper());
     }
 
     public void insert(User user) {
         executorService.execute(() -> userDao.insert(user));
     }
 
-    public void update(User user) {
-        executorService.execute(() -> userDao.update(user));
+    public void update(User user, Runnable onSuccess, OnFailureListener onFailure) {
+        executorService.execute(() -> {
+            try {
+                userDao.update(user);
+                handler.post(onSuccess);
+            } catch (Exception e) {
+                handler.post(() -> onFailure.onFailure(e));
+            }
+        });
+    }
+
+    public interface OnFailureListener {
+        void onFailure(Exception e);
     }
 
     public void delete(User user) {
@@ -42,8 +57,15 @@ public class UserRepository {
         return userDao.login(email, passwordHash);
     }
 
-    public void updateProfilePicture(int userId, String profilePicturePath) {
-        executorService.execute(() -> userDao.updateProfilePicture(userId, profilePicturePath));
+    public void updateProfilePicture(int userId, String profilePicturePath, Runnable onSuccess, OnFailureListener onFailure) {
+        executorService.execute(() -> {
+            try {
+                userDao.updateProfilePicture(userId, profilePicturePath);
+                handler.post(onSuccess);
+            } catch (Exception e) {
+                handler.post(() -> onFailure.onFailure(e));
+            }
+        });
     }
 
     public void updatePassword(int userId, String currentPasswordHash, String newPasswordHash, 

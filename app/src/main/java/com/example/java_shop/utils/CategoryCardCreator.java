@@ -58,22 +58,16 @@ public class CategoryCardCreator {
     
     private static int getCategoryIcon(String categoryId) {
         switch (categoryId.toLowerCase()) {
-            case "cpu":
-                return R.drawable.ic_category_cpu;
-            case "gpu":
-                return R.drawable.ic_category_gpu;
-            case "motherboard":
-                return R.drawable.ic_category_motherboard;
-            case "memory":
-                return R.drawable.ic_category_memory;
-            case "storage":
-                return R.drawable.ic_category_storage;
-            case "cooling":
-                return R.drawable.ic_category_cooling;
-            case "case":
-                return R.drawable.ic_category_case;
-            case "psu":
-                return R.drawable.ic_category_psu;
+            case "face":
+                return R.drawable.ic_category_face;
+            case "eye":
+                return R.drawable.ic_category_eye;
+            case "lip":
+                return R.drawable.ic_category_lips;
+            case "skincare":
+                return R.drawable.ic_category_skincare;
+            case "tools":
+                return R.drawable.ic_category_tools;
             default:
                 return R.drawable.baseline_category_24;
         }
