@@ -13,7 +13,7 @@ public class ProductDetailsViewModel extends AndroidViewModel {
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
     private final MutableLiveData<Boolean> addToCartResult;
-    private int currentProductId;
+    private String currentProductId;
 
     public ProductDetailsViewModel(Application application) {
         super(application);
@@ -22,12 +22,12 @@ public class ProductDetailsViewModel extends AndroidViewModel {
         addToCartResult = new MutableLiveData<>();
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         currentProductId = productId;
     }
 
     public LiveData<Product> getProduct() {
-        return productRepository.getProduct(String.valueOf(currentProductId));
+        return productRepository.getProduct(currentProductId);
     }
 
     public void addToCart(Product product) {

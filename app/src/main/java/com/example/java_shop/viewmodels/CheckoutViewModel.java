@@ -8,13 +8,18 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import com.example.java_shop.R;
 import com.example.java_shop.data.models.CartItemWithProduct;
+import com.example.java_shop.data.models.Order;
+import com.example.java_shop.data.models.OrderItem;
 import com.example.java_shop.data.repositories.CartRepository;
+import com.example.java_shop.data.repositories.OrderRepository;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class CheckoutViewModel extends AndroidViewModel {
 
     private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
     private final LiveData<List<CartItemWithProduct>> cartItems;
     private final LiveData<Double> subtotal;
     private final MutableLiveData<String> fullName;
@@ -37,6 +42,7 @@ public class CheckoutViewModel extends AndroidViewModel {
     public CheckoutViewModel(Application application) {
         super(application);
         cartRepository = new CartRepository(application);
+        orderRepository = new OrderRepository(application);
         
         // Initialize LiveData
         cartItems = cartRepository.getCartItemsWithProducts();
@@ -142,23 +148,39 @@ public class CheckoutViewModel extends AndroidViewModel {
             return;
         }
 
-        // Generate order ID
-        String orderId = UUID.randomUUID().toString();
-
-        // TODO: Process payment and create order in database
-
-        // Clear cart
-        cartRepository.clearCart();
-
-        // Navigate to confirmation screen
-        Bundle args = new Bundle();
-        args.putString("orderId", orderId);
-        navigationCommand.setValue(
-            new NavigationCommand(
-                R.id.action_checkoutFragment_to_orderConfirmationFragment,
-                args
-            )
+        // Create order
+        Order order = new Order(
+            1, // TODO: Get actual user ID from session
+            new Date(),
+            "PENDING",
+            getOrderTotal()
         );
+
+        List<OrderItem> orderItems = cartItems.getValue().stream()
+            .map(cartItem -> {
+                return new OrderItem(
+                    0, // Order ID will be set by repository
+                    cartItem.getProduct().getId(),
+                    cartItem.getQuantity(),
+                    cartItem.getProduct().getPrice()
+                );
+            })
+            .collect(Collectors.toList());
+
+        orderRepository.createOrder(order, orderItems, orderId -> {
+            // Clear cart
+            cartRepository.clearCart();
+
+            // Navigate to confirmation screen
+            Bundle args = new Bundle();
+            args.putInt("orderId", orderId);
+            navigationCommand.postValue(
+                new NavigationCommand(
+                    R.id.action_checkoutFragment_to_orderConfirmationFragment,
+                    args
+                )
+            );
+        });
     }
 
     public void resetNavigation() {

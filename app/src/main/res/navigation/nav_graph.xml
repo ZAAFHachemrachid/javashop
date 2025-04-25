@@ -30,6 +30,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
 
     <fragment
@@ -145,7 +148,7 @@
         android:label="Product Details">
         <argument
             android:name="productId"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -165,7 +168,7 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="categoryId"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
 
     <fragment

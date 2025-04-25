@@ -15,13 +15,14 @@
         <!-- Category Image -->
         <ImageView
             android:id="@+id/category_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
             tools:src="@drawable/placeholder_image" />
 
         <!-- Category Name -->
@@ -29,17 +30,18 @@
             android:id="@+id/category_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="8dp"
             android:textAlignment="center"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="@android:color/white"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/category_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Graphics Cards" />
+            tools:text="Graphics Cards"
+            android:layout_marginBottom="8dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

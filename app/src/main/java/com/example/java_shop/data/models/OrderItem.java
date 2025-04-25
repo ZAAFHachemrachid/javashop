@@ -30,12 +30,12 @@ public class OrderItem {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int orderId;
-    private int productId;
+    private String productId;
     private int quantity;
     private double price;  // Price at the time of order
 
     // Constructor
-    public OrderItem(int orderId, int productId, int quantity, double price) {
+    public OrderItem(int orderId, String productId, int quantity, double price) {
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
@@ -59,11 +59,11 @@ public class OrderItem {
         this.orderId = orderId;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 

@@ -1,6 +1,7 @@
 package com.example.java_shop.data.repositories;
 
 import android.app.Application;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import com.example.java_shop.data.database.CosShopDatabase;
 import com.example.java_shop.data.database.ProductDao;
@@ -45,9 +46,9 @@ public class ProductRepository {
         return productDao.getProductsByCategory(categoryId);
     }
 
-    @androidx.annotation.NonNull
-    public LiveData<List<Product>> getProductsByCategoryPreview(@androidx.annotation.NonNull String categoryId,
-                                                             @androidx.annotation.NonNull String query,
+    @NonNull
+    public LiveData<List<Product>> getProductsByCategoryPreview(@NonNull String categoryId,
+                                                             @NonNull String query,
                                                              int limit) {
         String searchQuery = query.isEmpty() ? "%" : "%" + query + "%";
         return productDao.getProductsByCategoryWithLimit(categoryId, searchQuery, limit);

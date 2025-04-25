@@ -7,7 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
-import com.example.java_shop.data.database.ComputerShopDatabase;
+import com.example.java_shop.data.database.CosShopDatabase;
 import com.example.java_shop.data.models.Category;
 import com.example.java_shop.data.models.Product;
 import com.example.java_shop.data.repositories.CategoryRepository;
@@ -31,7 +31,7 @@ public class DataInitializer {
     public DataInitializer(Context context) {
         this.context = context;
         this.executor = Executors.newSingleThreadExecutor();
-        ComputerShopDatabase database = ComputerShopDatabase.getDatabase(context);
+        CosShopDatabase database = CosShopDatabase.getDatabase(context);
         
         // Get the application context
         Context appContext = context.getApplicationContext();

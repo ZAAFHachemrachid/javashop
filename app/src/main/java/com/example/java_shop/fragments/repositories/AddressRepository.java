@@ -2,7 +2,7 @@ package com.example.java_shop.data.repositories;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
-import com.example.java_shop.data.database.ComputerShopDatabase;
+import com.example.java_shop.data.database.CosShopDatabase;
 import com.example.java_shop.data.database.AddressDao;
 import com.example.java_shop.data.models.Address;
 import java.util.List;
@@ -14,7 +14,7 @@ public class AddressRepository {
     private final ExecutorService executorService;
 
     public AddressRepository(Application application) {
-        ComputerShopDatabase database = ComputerShopDatabase.getDatabase(application);
+        CosShopDatabase database = CosShopDatabase.getDatabase(application);
         addressDao = database.addressDao();
         executorService = Executors.newSingleThreadExecutor();
     }

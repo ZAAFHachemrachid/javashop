@@ -45,8 +45,9 @@ public class CategoryCardCreator {
             });
             
             // Add margins
+            int cardWidth = (int) (120 * context.getResources().getDisplayMetrics().density); // 120dp
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    cardWidth,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(8, 0, 8, 0);
             cardView.setLayoutParams(params);

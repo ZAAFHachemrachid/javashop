@@ -17,20 +17,38 @@
             app:title="Categories"
             app:titleTextAppearance="?attr/textAppearanceHeadline6" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:startIconDrawable="@drawable/baseline_search_24"
+            android:hint="Search products"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Categories Grid -->
+    <!-- Categories List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="8dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:spanCount="2"
-        tools:itemCount="6"
-        tools:listitem="@layout/item_category" />
+        tools:itemCount="4"
+        tools:listitem="@layout/item_category_with_products" />
 
     <!-- Empty State -->
     <!-- Loading Indicator -->

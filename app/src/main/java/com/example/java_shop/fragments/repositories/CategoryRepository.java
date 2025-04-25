@@ -2,7 +2,7 @@ package com.example.java_shop.data.repositories;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
-import com.example.java_shop.data.database.ComputerShopDatabase;
+import com.example.java_shop.data.database.CosShopDatabase;
 import com.example.java_shop.data.database.CategoryDao;
 import com.example.java_shop.data.models.Category;
 import java.util.List;
@@ -15,7 +15,7 @@ public class CategoryRepository {
 
     // Constructor
     public CategoryRepository(Application application) {
-        ComputerShopDatabase database = ComputerShopDatabase.getDatabase(application);
+        CosShopDatabase database = CosShopDatabase.getDatabase(application);
         categoryDao = database.categoryDao();
         executorService = Executors.newFixedThreadPool(2);
     }

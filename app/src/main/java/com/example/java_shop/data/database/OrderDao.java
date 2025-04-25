@@ -42,12 +42,13 @@ public interface OrderDao {
     LiveData<Double> getTotalSpentByUser(int userId);
 
     @Transaction
-    default void createOrderWithItems(Order order, List<OrderItem> items) {
+    default long createOrderWithItems(Order order, List<OrderItem> items) {
         long orderId = insert(order);
         for (OrderItem item : items) {
             item.setOrderId((int) orderId);
         }
         insertOrderItems(items);
+        return orderId;
     }
 
     @Query("DELETE FROM orders WHERE userId = :userId")

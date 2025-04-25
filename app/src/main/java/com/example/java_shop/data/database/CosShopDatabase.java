@@ -24,17 +24,18 @@ import com.example.java_shop.utils.Converters;
         Order.class,
         OrderItem.class
     },
-    version = 7, // Increment version after schema changes:
+    version = 8, // Increment version after schema changes:
     // v1: Initial schema
     // v2: Added new fields to Product
     // v3: Updated Category schema
     // v4: Added no-args constructor to Product
     // v5: Added offerValidUntilTimestamp and originalPrice fields to Product
     // v6: Added User, Address, Order, and OrderItem entities
+    // v7: Added foreign key and index to Category schema
     exportSchema = false
 )
 @TypeConverters({Converters.class})
-public abstract class ComputerShopDatabase extends RoomDatabase {
+public abstract class CosShopDatabase extends RoomDatabase {
     
     // DAOs
     public abstract ProductDao productDao();
@@ -45,16 +46,16 @@ public abstract class ComputerShopDatabase extends RoomDatabase {
     public abstract OrderDao orderDao();
 
     // Singleton instance
-    private static volatile ComputerShopDatabase INSTANCE;
+    private static volatile CosShopDatabase INSTANCE;
 
     // Singleton pattern with double-checked locking
-    public static ComputerShopDatabase getDatabase(final Context context) {
+    public static CosShopDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (ComputerShopDatabase.class) {
+            synchronized (CosShopDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(
                         context.getApplicationContext(),
-                        ComputerShopDatabase.class,
+                        CosShopDatabase.class,
                         "cosmetics_shop_db"
                     )
                     .fallbackToDestructiveMigration() // For development only

@@ -41,6 +41,9 @@ public interface ProductDao {
     // Category queries
     @Query("SELECT * FROM products WHERE categoryId = :categoryId")
     LiveData<List<Product>> getProductsByCategory(String categoryId);
+    
+    @Query("SELECT * FROM products WHERE categoryId = :categoryId AND (name LIKE :searchQuery OR description LIKE :searchQuery) ORDER BY name ASC LIMIT :limit")
+    LiveData<List<Product>> getProductsByCategoryWithLimit(String categoryId, String searchQuery, int limit);
 
     // Featured products
     @Query("SELECT * FROM products WHERE isFeatured = 1 ORDER BY price DESC LIMIT 5")
@@ -53,6 +56,9 @@ public interface ProductDao {
     // Search
     @Query("SELECT * FROM products WHERE name LIKE :query OR description LIKE :query")
     LiveData<List<Product>> searchProducts(String query);
+
+    @Query("SELECT * FROM products WHERE categoryId = :categoryId AND (name LIKE :query OR description LIKE :query)")
+    LiveData<List<Product>> searchProductsByCategory(String categoryId, String query);
 
     // Stock management
     @Query("SELECT (stockQuantity > 0) FROM products WHERE id = :productId")

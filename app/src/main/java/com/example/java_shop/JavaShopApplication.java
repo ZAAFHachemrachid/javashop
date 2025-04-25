@@ -3,7 +3,7 @@ package com.example.java_shop;
 import android.app.Application;
 import android.util.Log;
 
-import com.example.java_shop.data.database.ComputerShopDatabase;
+import com.example.java_shop.data.database.CosShopDatabase;
 import com.example.java_shop.data.repositories.CategoryRepository;
 import com.example.java_shop.utils.DataInitializer;
 
@@ -15,7 +15,7 @@ public class JavaShopApplication extends Application {
         super.onCreate();
         
         // Initialize database
-        ComputerShopDatabase database = ComputerShopDatabase.getDatabase(this);
+        CosShopDatabase database = CosShopDatabase.getDatabase(this);
         
         // Initialize repositories
         CategoryRepository categoryRepository = new CategoryRepository(this);

@@ -30,7 +30,7 @@ public class CategoryDetailsViewModel extends AndroidViewModel {
     // Filter state
     private final MutableLiveData<Boolean> showInStockOnly;
     private final MutableLiveData<SortOption> currentSortOption;
-    private int currentCategoryId;
+    private String currentCategoryId;
 
     public enum SortOption {
         NAME_ASC,
@@ -56,17 +56,16 @@ public class CategoryDetailsViewModel extends AndroidViewModel {
         subcategories = new MutableLiveData<>();
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         currentCategoryId = categoryId;
         
         // Update LiveData sources
         MutableLiveData<Category> categoryData = (MutableLiveData<Category>) category;
         categoryData.setValue(null);
         
-        String categoryIdStr = String.valueOf(categoryId);
-        LiveData<Category> newCategory = categoryRepository.getCategory(categoryIdStr);
-        LiveData<List<Category>> newSubcategories = categoryRepository.getSubcategories(categoryIdStr);
-        LiveData<List<Product>> categoryProducts = productRepository.getProductsByCategory(categoryIdStr);
+        LiveData<Category> newCategory = categoryRepository.getCategory(categoryId);
+        LiveData<List<Category>> newSubcategories = categoryRepository.getSubcategories(categoryId);
+        LiveData<List<Product>> categoryProducts = productRepository.getProductsByCategory(categoryId);
         
         // Update category and subcategories
         categoryData.setValue(newCategory.getValue());
@@ -77,10 +76,10 @@ public class CategoryDetailsViewModel extends AndroidViewModel {
             applyFiltersAndSort(products));
         
         filteredProducts.addSource(showInStockOnly, inStockOnly -> 
-            applyFiltersAndSort(productRepository.getProductsByCategory(String.valueOf(categoryId)).getValue()));
+            applyFiltersAndSort(productRepository.getProductsByCategory(categoryId).getValue()));
         
         filteredProducts.addSource(currentSortOption, sortOption ->
-            applyFiltersAndSort(productRepository.getProductsByCategory(String.valueOf(categoryId)).getValue()));
+            applyFiltersAndSort(productRepository.getProductsByCategory(categoryId).getValue()));
     }
 
     private void applyFiltersAndSort(List<Product> products) {
@@ -163,7 +162,7 @@ public class CategoryDetailsViewModel extends AndroidViewModel {
 
     public void navigateToProduct(Product product) {
         Bundle args = new Bundle();
-        args.putInt("productId", Integer.parseInt(product.getId()));
+        args.putString("productId", product.getId());
         navigationCommand.setValue(
             new NavigationCommand(
                 R.id.action_categoryDetailsFragment_to_productDetailsFragment,
@@ -174,7 +173,7 @@ public class CategoryDetailsViewModel extends AndroidViewModel {
 
     public void navigateToSubcategory(Category subcategory) {
         Bundle args = new Bundle();
-        args.putInt("categoryId", Integer.parseInt(subcategory.getId()));
+        args.putString("categoryId", subcategory.getId());
         navigationCommand.setValue(
             new NavigationCommand(
                 R.id.action_categoryDetailsFragment_self,

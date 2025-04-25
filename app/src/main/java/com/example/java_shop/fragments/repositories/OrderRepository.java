@@ -2,7 +2,7 @@ package com.example.java_shop.data.repositories;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
-import com.example.java_shop.data.database.ComputerShopDatabase;
+import com.example.java_shop.data.database.CosShopDatabase;
 import com.example.java_shop.data.database.OrderDao;
 import com.example.java_shop.data.models.Order;
 import com.example.java_shop.data.models.OrderItem;
@@ -16,13 +16,20 @@ public class OrderRepository {
     private final ExecutorService executorService;
 
     public OrderRepository(Application application) {
-        ComputerShopDatabase database = ComputerShopDatabase.getDatabase(application);
+        CosShopDatabase database = CosShopDatabase.getDatabase(application);
         orderDao = database.orderDao();
         executorService = Executors.newSingleThreadExecutor();
     }
 
-    public void createOrder(Order order, List<OrderItem> items) {
-        executorService.execute(() -> orderDao.createOrderWithItems(order, items));
+    public interface OrderCreationCallback {
+        void onOrderCreated(int orderId);
+    }
+
+    public void createOrder(Order order, List<OrderItem> items, OrderCreationCallback callback) {
+        executorService.execute(() -> {
+            long orderId = orderDao.createOrderWithItems(order, items);
+            callback.onOrderCreated((int) orderId);
+        });
     }
 
     public LiveData<List<Order>> getOrdersForUser(int userId) {

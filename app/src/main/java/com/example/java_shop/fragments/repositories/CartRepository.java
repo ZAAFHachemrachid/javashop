@@ -3,7 +3,7 @@ package com.example.java_shop.data.repositories;
 import android.app.Application;
 import androidx.lifecycle.LiveData;
 import com.example.java_shop.data.database.CartDao;
-import com.example.java_shop.data.database.ComputerShopDatabase;
+import com.example.java_shop.data.database.CosShopDatabase;
 import com.example.java_shop.data.models.CartItem;
 import com.example.java_shop.data.models.CartItemWithProduct;
 import java.util.List;
@@ -15,7 +15,7 @@ public class CartRepository {
     private final ExecutorService executorService;
 
     public CartRepository(Application application) {
-        ComputerShopDatabase database = ComputerShopDatabase.getDatabase(application);
+        CosShopDatabase database = CosShopDatabase.getDatabase(application);
         cartDao = database.cartDao();
         executorService = Executors.newSingleThreadExecutor();
     }

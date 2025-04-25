@@ -4,7 +4,7 @@ import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.lifecycle.LiveData;
-import com.example.java_shop.data.database.ComputerShopDatabase;
+import com.example.java_shop.data.database.CosShopDatabase;
 import com.example.java_shop.data.database.UserDao;
 import com.example.java_shop.data.models.User;
 import java.util.concurrent.ExecutorService;
@@ -16,7 +16,7 @@ public class UserRepository {
     private final Handler handler;
 
     public UserRepository(Application application) {
-        ComputerShopDatabase database = ComputerShopDatabase.getDatabase(application);
+        CosShopDatabase database = CosShopDatabase.getDatabase(application);
         userDao = database.userDao();
         executorService = Executors.newSingleThreadExecutor();
         handler = new Handler(Looper.getMainLooper());

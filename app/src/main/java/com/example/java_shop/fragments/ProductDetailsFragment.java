@@ -42,7 +42,7 @@ public class ProductDetailsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(ProductDetailsViewModel.class);
         
         // Get product ID from navigation args
-        int productId = ProductDetailsFragmentArgs.fromBundle(getArguments()).getProductId();
+        String productId = ProductDetailsFragmentArgs.fromBundle(getArguments()).getProductId();
         viewModel.setProductId(productId);
     }
 
